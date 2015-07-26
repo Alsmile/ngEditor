@@ -2,13 +2,18 @@
 <html ng-app="app">
 <head>
   <meta charset="UTF-8">
-  <title>angular-editor demo</title>
-  <link rel="stylesheet" href="css/main.css" />
+  <title>Angular ngEditor demo</title>
+  <link rel="stylesheet" href="css/article.css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" />
   <script src="js/angular.min.js"></script>
+  <script src="js/angular-file-upload.min.js"></script>
+  <script src="../src/ngEditor.js"></script>
   <script src="js/controllers.js"></script>
 </head>
 <body ng-controller="AppController" >
-  <h1 class="text-center">angular-editor demo</h1>
-
+  <h1 class="text-center">Angular ngEditor demo</h1>
+  <div class="rel padding-10">
+    <ng-editor ng-model="doc.content" editor="editor"></ng-editor>
+  </div>
 </body>
 </html>

@@ -1,0 +1,25 @@
+{
+  "name": "angular ngEditor",
+  "version": "0.0.1",
+  "description": "AngularJS WYSIWYG editor",
+  "main": "./src/ngEditor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alsmile/ngEditor.git"
+  },
+  "keywords": [
+    "angularjs",
+    "wysiwyg",
+    "editor"
+  ],
+  "author": "Alsmile",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/Alsmile/ngEditor/issues"
+  },
+  "devDependencies": {
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "author": "Alsmile",
+  "name": "angular ngEditor",
+  "description": "Angular WYSIWYG editor",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Alsmile/ngEditor",
+  "main": "./src/ngEditor.js",
+  "dependencies": {
+    "angular": ">= 1.0.0",
+    "angular-file-upload": ">= 1.1.5"
+  }
+}
