@@ -1,0 +1,354 @@
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+.border-main {
+  border-color: #0ae;
+}
+
+.padding-2 {
+  padding: 2px !important;
+}
+
+.padding-5 {
+  padding: 5px !important;
+}
+
+.padding-10 {
+  padding: 10px !important;
+}
+
+.padding-v-5 {
+  padding: 5px 0 !important;
+}
+
+.padding-v-10 {
+  padding: 10px 0 !important;
+}
+
+.padding-v-20 {
+  padding: 20px 0 !important;
+}
+
+.padding-h-20 {
+  padding: 0 20px !important;
+}
+
+.padding-top-20 {
+  padding-top: 20px !important;
+}
+
+.padding-bottom-10 {
+  padding-bottom: 10px !important;
+}
+
+.pr5 {
+  padding-right: 5px !important;
+}
+
+.pl50 {
+  padding-left: 50px !important;
+}
+
+.mt5 {
+  margin-top: 5px !important;
+}
+
+.mt10 {
+  margin-top: 10px !important;
+}
+
+.mt50 {
+  margin-top: 50px !important;
+}
+
+.ml5 {
+  margin-left: 5px !important;
+}
+
+.ml10 {
+  margin-left: 10px !important;
+}
+
+.ml20 {
+  margin-left: 20px !important;
+}
+
+.ml40 {
+  margin-left: 40px !important;
+}
+
+.ml50 {
+  margin-left: 50px !important;
+}
+
+.mr10 {
+  margin-right: 10px !important;
+}
+
+.mr20 {
+  margin-right: 20px !important;
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.mx20 {
+  margin-top: 20px !important;
+  margin-bottom: 2rem !important;
+}
+
+.my20 {
+  margin-left: 20px !important;
+  margin-right: 20px !important;
+}
+
+.mb5 {
+  margin-bottom: 5px !important;
+}
+
+.mb10 {
+  margin-bottom: 10px !important;
+}
+
+.mb20 {
+  margin-bottom: 20px !important;
+}
+
+.mb50 {
+  margin-bottom: 50px !important;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.no-radius {
+  border-radius: 0 !important;
+}
+
+.fr {
+  float: right !important;
+}
+
+.center {
+  margin: auto;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.color-main {
+  color: #0ae;
+}
+
+.color-success {
+  color: #5d8;
+}
+
+.color-warning {
+  color: #f90;
+}
+
+.rel {
+  position: relative;
+}
+
+.abs {
+  position: absolute;
+}
+
+
+.article {
+  padding: 20px 15px;
+  min-height: 300px;
+  outline: none;
+}
+.article blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  border-left: 5px solid #eee;
+}
+
+.ng-editor {
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  border: 1px solid #c9d8db;
+}
+.ng-editor .toolbar {
+  border-bottom: 1px solid #eee;
+  min-height: 40px;
+  color: #555;
+  padding: 0 5px;
+  background: #fff;
+  z-index: 100;
+}
+
+.ng-editor .toolbar .button {
+	font-size: 14px;
+  line-height: 40px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #555;
+  cursor: pointer;
+  padding: 0 15px;
+  position: relative;
+}
+
+.ng-editor .toolbar .button .sub-menu {
+	line-height: 30px;
+}
+
+.ng-editor .toolbar button {
+	background-color: transparent;
+	border: none;
+	outline: none;
+	color: #555;
+	cursor: pointer;
+}
+
+.ng-editor .toolbar button.bk {
+  background-color: #aaa;
+}
+
+.ng-editor .toolbar button:hover {
+  color: #000;
+}
+.ng-editor .toolbar .item {
+  display: inline-block;
+  vertical-align: mildle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+}
+.ng-editor .toolbar .item .separator {
+  width: 1px;
+  border-left: 1px solid #ccc;
+  height: 18px;
+  margin-left: 7px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: top;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+}
+.ng-editor .toolbar .item .white {
+  background: transparent;
+  height: 1px;
+  position: relative;
+}
+.ng-editor .toolbar .item .down {
+  background: #ccc;
+}
+.ng-editor .toolbar .item .abs {
+  border: 1px solid #ccc;
+  left: 0;
+  min-width: 70px;
+  background: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+	z-index: 999;
+}
+.ng-editor .toolbar .item .abs.inline {
+  width: 120px;
+  line-height: 20px;
+}
+.ng-editor .toolbar .item .abs .sub-menu {
+  overflow: hidden;
+}
+.ng-editor .toolbar .item .abs .sub-menu a {
+  display: block;
+  white-space: nowrap;
+  padding: 0 20px;
+  color: #555;
+  text-align: left;
+  line-height: 28px;
+}
+.ng-editor .toolbar .item .abs .sub-menu:hover {
+  background-color: #ddd;
+}
+.ng-editor .toolbar .item .abs .sub-menu.inline {
+  display: inline-block;
+  vertical-align: top;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  text-align: center;
+}
+.ng-editor .toolbar .item .abs .sub-menu.inline a {
+  padding: 5px;
+  line-height: 16px;
+}
+.ng-editor .toolbar .item .abs .sub-menu input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 28px;
+  opacity: 0;
+}
+.ng-editor .toolbar .item .abs .separator-h {
+  display: block;
+  background-color: #aaa;
+  width: 100%;
+  height: 1px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+.ng-editor ol {
+  list-style: inherit;
+}
+.ng-editor ol li {
+  list-style-type: octal;
+  list-style-image: inherit;
+  list-style-position: inside;
+}
+.ng-editor ul {
+  list-style: inherit;
+}
+.ng-editor ul li {
+  list-style-type: inherit;
+  list-style-image: inherit;
+  list-style-position: inside;
+}
+.ng-editor textarea {
+  min-height: 300px;
+  outline: none;
+  width: 100%;
+  border: none;
+}
+.ng-editor .tip {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.ng-editor .tip > div {
+  position: absolute;
+  top: 300px;
+  left: 0;
+  right: 0;
+}
+.ng-editor .tip .fa {
+  vertical-align: middle;
+  color: #ff4200;
+  margin-right: 20px;
+}
+.ng-editor .tip .progress {
+  color: #ff4200;
+}
