@@ -3,6 +3,7 @@
 Angular ngEditor is a module for the AngularJS framework. 
 
 Get started at [ngEditor](http://alsmile.github.io/ngEditor)!
+[Demo](http://alsmile.github.io/ngEditor/demo/)!
 
 #Required dependancies
 
