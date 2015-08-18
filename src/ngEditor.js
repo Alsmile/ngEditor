@@ -127,32 +127,35 @@
     return {
       restrict: 'E',
       template: '<div class="ng-editor">' +
-      '<div class="toolbar" ng-style="getToolbarStyle()">' +
-    '<div class="item rel" ng-repeat="item in toolbarButtons" ng-class="{fr: item.right}">' +
-    '<button ng-if="item.class && !item.dropdown.length" ng-click="command(item.command, false, item.val)" ' +
-    'ng-class="{bk: item.right && !editable}" title="{{::item.tooltip}}">' +
-    '<i class="{{::item.class}}"></i>' +
-    '</button>' +
-    '<button ng-if="item.class && item.dropdown.length" title="{{::item.tooltip}}" ' +
-    'ng-mousemove="item.isDown = true" ng-mouseleave="item.isDown = false" ng-class="{down: item.isDown}">' +
-    '<i class="{{::item.class}}"></i>' +
-    '<div class="abs" ng-if="item.dropdown.length && item.isDown" ng-class="{inline:item.inline}">' +
-    ' <div ng-repeat="subItem in item.dropdown" class="sub-menu rel" ng-class="{inline:subItem.color}" >' +
-    '<a ng-if="!subItem.separator" ng-click="command(subItem.command, false, subItem.val)" >' +
-    '<label ng-if="subItem.caption">{{::subItem.caption}}</label>' +
-    '<label ng-if="subItem.color" class="fa fa-square" style="color:{{subItem.val}}"></label>' +
-    '</a>' +
-    ' <label ng-if="subItem.separator" class="separator-h"></label>' +
-    ' <input ng-if="subItem.isUpload" type="file" nv-file-select="" uploader="uploader"  />' +
-    '</div></div> </button>  <div ng-if="!item.class" class="separator"></div> </div> </div>' +
-    ' <div ng-show="editable" class="article" contenteditable="true" ng-model="ngModel" editor="editor"></div>' +
-    '  <div ng-hide="editable" class="padding-10">' +
-    '  <textarea ng-model="ngModel"></textarea>' +
-    '  </div>' +
-    '  <div ng-if="uploadProgress < 100" class="tip">' +
-    '  <div class="abs">' +
-      ' <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>' +
-    '  正在上传图片，进度： <label class="progress">{{uploadProgress}}%</label>  </div>  </div>  </div>',
+      						'<div class="toolbar" ng-style="getToolbarStyle()">' +
+    								'<div class="item rel" ng-repeat="item in toolbarButtons" ng-class="{fr: item.right}">' +
+											'<button class="button" ng-if="item.class && !item.dropdown.length" ng-click="command(item.command, false, item.val)" ' +
+    										'ng-class="{bk: item.right && !editable}" title="{{::item.tooltip}}">' +
+    										'<i class="{{::item.class}}"></i>' +
+											'</button>' +
+    									'<div class="button" ng-if="item.class && item.dropdown.length" title="{{::item.tooltip}}"' +
+    										'ng-mousemove="item.isDown = true" ng-mouseleave="item.isDown = false" ng-class="{down: item.isDown}">' +
+    										'<i class="{{::item.class}}"></i>' +
+    										'<div class="abs" ng-if="item.dropdown.length && item.isDown" ng-class="{inline:item.inline}">' +
+    											'<div ng-repeat="subItem in item.dropdown" class="sub-menu rel" ng-class="{inline:subItem.color}" >' +
+    												'<button ng-if="!subItem.separator" ng-click="command(subItem.command, false, subItem.val)" >' +
+    													'<label ng-if="subItem.caption">{{::subItem.caption}}</label>' +
+    													'<label ng-if="subItem.color" class="fa fa-square" style="color:{{subItem.val}}"></label>' +
+    												'</button>' +
+    												'<label ng-if="subItem.separator" class="separator-h"></label>' +
+    												'<input ng-if="subItem.isUpload" type="file" nv-file-select="" uploader="uploader"  />' +
+			                 		'</div>' +
+												'</div>' +
+											'</div> ' +
+										'<div ng-if="!item.class" class="separator"></div> </div> </div>' +
+    							'<div ng-show="editable" class="article" contenteditable="true" ng-model="ngModel" editor="editor"></div>' +
+    							'<div ng-hide="editable" class="padding-10">' +
+    								'<textarea ng-model="ngModel"></textarea>' +
+    							'</div>' +
+    							'<div ng-if="uploadProgress < 100" class="tip">' +
+    								'<div class="abs">' +
+      								'<i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>' +
+								'  正在上传图片，进度： <label class="progress">{{uploadProgress}}%</label>  </div>  </div>  </div>',
       scope: {
         ngModel:'=',
         editor:'='
@@ -284,29 +287,29 @@
             tooltip:'标题和文本',
             dropdown: [{
               caption: '标题 1',
-              command: 'FormatBlock',
+              command: 'formatBlock',
               val: 'h1'
             }, {
               caption: '标题 2',
-              command: 'FormatBlock',
+              command: 'formatBlock',
               val: 'h2'
             }, {
               caption: '标题 3',
-              command: 'FormatBlock',
+              command: 'formatBlock',
               val: 'h3'
             }, {
               caption: '标题 4',
-              command: 'FormatBlock',
+              command: 'formatBlock',
               val: 'h4'
             }, {
               caption: '标题 5',
-              command: 'FormatBlock',
+              command: 'formatBlock',
               val: 'h5'
             }, {
               separator:true
             }, {
               caption: '普通文本',
-              command: 'FormatBlock',
+              command: 'formatBlock',
               val: 'div'
             }]
           },
@@ -409,7 +412,7 @@
           'quote': {
             class: 'fa fa-quote-right',
             tooltip:'引用',
-            command: 'FormatBlock',
+            command: 'formatBlock',
             val: 'blockquote'
           },
           'separator4' :{},
@@ -488,7 +491,8 @@
         };
 
         $scope.editable = true;
-        $scope.command = function (cmd, b, val) {
+        $scope.command = function (cmd, b, val, event) {
+					if (event) event.stopPropagation();
           switch (cmd) {
             case 'createLink':
               val = prompt('请输入链接URL');
@@ -507,6 +511,7 @@
               return;
               break;
           }
+
           document.execCommand(cmd, b, val);
         };
 

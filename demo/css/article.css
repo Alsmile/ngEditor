@@ -194,7 +194,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   background: #fff;
   z-index: 100;
 }
-.ng-editor .toolbar button {
+
+.ng-editor .toolbar .button {
+	font-size: 14px;
   line-height: 40px;
   background-color: transparent;
   border: none;
@@ -204,9 +206,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 0 15px;
   position: relative;
 }
+
+.ng-editor .toolbar .button .sub-menu {
+	line-height: 30px;
+}
+
+.ng-editor .toolbar button {
+	background-color: transparent;
+	border: none;
+	outline: none;
+	color: #555;
+	cursor: pointer;
+}
+
 .ng-editor .toolbar button.bk {
   background-color: #aaa;
 }
+
 .ng-editor .toolbar button:hover {
   color: #000;
 }
@@ -244,6 +260,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   background: #fff;
   padding-top: 10px;
   padding-bottom: 10px;
+	z-index: 999;
 }
 .ng-editor .toolbar .item .abs.inline {
   width: 120px;
