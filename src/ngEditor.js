@@ -32,18 +32,17 @@
 
   module.directive('contenteditable', ['$rootScope', '$timeout', function($rootScope, $timeout) {
     return {
-      restrict: 'A', // only activate on element attribute
-      require: '?ngModel', // get a hold of NgModelController,
+      restrict: 'A',
+      require: '?ngModel',
       scope: {
         editor:'='
       },
       link: function($scope, element, attrs, ctrl) {
-        if (!ctrl) { return; }
+        if (!ctrl || !$scope.editor) return;
 
         var timer;
 
         // view -> model
-        // 是否有输入
         var isInputting;
         var getContent = function () {
           isInputting = false;
@@ -62,6 +61,7 @@
                 elem: val
               });
             }
+
             if (angular.element(val).hasClass("article-abstract")) {
               catalogs.push({
                 name: angular.element(val).text(),
@@ -93,15 +93,17 @@
         };
 
         element.bind('input', function() {
-          if (timer) $timeout.cancel(timer);
+					if (isInputting) return ;
 
-          isInputting = true;
+          if (timer) $timeout.cancel(timer);
           timer = $timeout(function() {
             getContent();
           }, 1000);
         });
 
         element.bind('blur', function() {
+					// Ended for inputting and get content right now while it was inputting.
+					// Do nothing when it was not inputting. Because has get.
           if (!isInputting) return ;
 
           if (timer) $timeout.cancel(timer);
@@ -113,7 +115,6 @@
           element.html(ctrl.$viewValue);
         };
 
-        // load init value from DOM
         ctrl.$render();
 
         $scope.$on('$destroy', function(){
@@ -168,7 +169,7 @@
           throw new TypeError('"editor" must be an instance of NgEditor');
         }
 
-        //////////////////
+        // Default fonts.
         var fonts = {
           '宋体': 'SimSun',
           '微软雅黑':'Microsoft YaHei',
@@ -176,14 +177,14 @@
           '黑体':'SimHei',
           '隶书':'SimLi',
           'andale mono': 'andale mono',
-          'arial, helvetica,sans-serif': 'arial',
+          'arial, helvetica, sans-serif': 'arial',
           'arial black':'arial black,avant garde',
           'comic sans ms': 'comic sans ms',
           'impact':'impact,chicago' ,
           'times new roman':'times new roman'
         };
-
         $scope.fonts = [];
+				// Set custom fonts.
         if ($scope.editor.options.fonts) {
           angular.forEach($scope.editor.options.fonts, function (val) {
             $scope.fonts.push({
@@ -193,6 +194,7 @@
             });
           });
         }
+				// Set default fonts.
         else {
           angular.forEach(fonts, function (val, key) {
             $scope.fonts.push({
@@ -202,9 +204,8 @@
             });
           });
         }
-        //////////////////
 
-        //////////////////
+        // Default font-sizes.
         var fontSizes = {
           '10px':1,
           '12px':2,
@@ -214,8 +215,8 @@
           '32px':6,
           '48px':7
         };
-
         $scope.fontSizes = [];
+				// Set custom font-sizes.
         if ($scope.editor.options.fontSizes) {
           angular.forEach($scope.editor.options.fontSizes, function (val) {
             $scope.fontSizes.push({
@@ -225,6 +226,7 @@
             });
           });
         }
+				// Set default font-sizes.
         else {
           angular.forEach(fontSizes, function (val, key) {
             $scope.fontSizes.push({
@@ -234,12 +236,12 @@
             });
           });
         }
-        //////////////////
 
-        //////////////////
+				// Default colors.
         var fontColors = ['#c00','#f00','#ffc000','#ff0','#92d050','#00b050','#00b0f0','#0070c0','#002060','#7030a0'];
-
+				// Define font-colors.
         $scope.fontColors = [];
+				// Set custom font-colors.
         if ($scope.editor.options.fontColors) {
           angular.forEach($scope.editor.options.fontColors, function (val) {
             $scope.fontColors.push({
@@ -249,6 +251,7 @@
             });
           });
         }
+				// Set default font-colors.
         else {
           angular.forEach(fontColors, function (val) {
             $scope.fontColors.push({
@@ -259,6 +262,7 @@
           });
         }
 
+				// Set custom back-colors.
         $scope.backColors = [];
         if ($scope.editor.options.backColors) {
           angular.forEach($scope.editor.options.backColors, function (val) {
@@ -269,6 +273,7 @@
             });
           });
         }
+				// Set default back-colors.
         else {
           angular.forEach(fontColors, function (val) {
             $scope.backColors.push({
@@ -278,9 +283,8 @@
             });
           });
         }
-        //////////////////
 
-        ///////////////// ***********Toolbar Buttons*************///////////////////
+				// Define toolbar buttons.
         var toolbarButtons = {
           'title': {
             class: 'fa fa-header',
@@ -423,22 +427,22 @@
             command: 'html'
           }
         };
-
-        //
         $scope.toolbarButtons = [];
+				// Set custom toolbar buttons.
         if ($scope.editor.options.toolbar) {
           angular.forEach($scope.editor.options.toolbar, function (val) {
             $scope.toolbarButtons.push(toolbarButtons[val]);
           });
         }
+				// Set default toolbar buttons.
         else {
           angular.forEach(toolbarButtons, function (val, key) {
             $scope.toolbarButtons.push(val);
           });
         }
-        ///////////////////////////////////////////////////////////////////////////
 
-        ///////////////// ***********Set toolbar position.*************///////////////////
+
+        // Get editor element and toolbar element.
         var editorElem, toolbarElem;
         angular.forEach(element.children(), function (val) {
           if (angular.element(val).attr("contenteditable")) {
@@ -453,10 +457,11 @@
           throw new TypeError('There is not a contenteditable.');
         }
 
+				// Set toolbar fixed or not.
         var offset;
         var toolbarStyle;
         angular.element($window).bind('scroll', fixedScroll);
-        function fixedScroll(ev){
+        var fixedScroll = function (ev) {
           if (!offset) offset =  toolbarElem.getBoundingClientRect().top;
           if (this.pageYOffset > offset + $scope.editor.options.top) {
             toolbarStyle = {
@@ -473,22 +478,13 @@
           }
           $scope.$apply();
         };
-        ///////////////////////////////////////////////////////////////////////////////
-
-        document.execCommand('enableobjectresizing', true);
-        document.execCommand('styleWithCSS', true);
 
         $scope.getToolbarStyle = function () {
           return toolbarStyle;
-        }
-
-        $scope.showTitle = function (data) {
-          $scope.isShowTitle = data;
         };
 
-        $scope.clickEditor = function () {
-          $scope.isShowTitle = false;
-        };
+				document.execCommand('enableobjectresizing', true);
+				document.execCommand('styleWithCSS', true);
 
         $scope.editable = true;
         $scope.command = function (cmd, b, val, event) {
@@ -515,7 +511,7 @@
           document.execCommand(cmd, b, val);
         };
 
-        ////////////////////// Upload image. //////////////////////////
+        // Upload image by FileUploader.
         $scope.uploader = new FileUploader({
           url: $scope.editor.options.uploadUrl,
           headers : $scope.editor.options.uploadHeaders ,
@@ -534,9 +530,8 @@
         $scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
           document.execCommand('insertImage', false, response.url);
         };
-        /////////////////////////////////////////////////////
 
-        //////////////////////////////////////////
+        // Events of editor.
         $scope.editor._onContentChanged = function (content) {
           // do sth...
 
@@ -548,8 +543,8 @@
 
           $scope.editor.onCatalogChanged(content);
         };
-        //////////////////////////////////////////
 
+				// Clear.
         $scope.$on('$destroy', function(){
           angular.element($window).unbind('scroll', fixedScroll);
         });

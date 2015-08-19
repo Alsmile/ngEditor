@@ -11,35 +11,35 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 2px !important;
 }
 
-.padding-5 {
+.p5 {
   padding: 5px !important;
 }
 
-.padding-10 {
+.p10 {
   padding: 10px !important;
 }
 
-.padding-v-5 {
+.pv5 {
   padding: 5px 0 !important;
 }
 
-.padding-v-10 {
+.pv10 {
   padding: 10px 0 !important;
 }
 
-.padding-v-20 {
+.pv20 {
   padding: 20px 0 !important;
 }
 
-.padding-h-20 {
+.ph20 {
   padding: 0 20px !important;
 }
 
-.padding-top-20 {
+.pt20 {
   padding-top: 20px !important;
 }
 
-.padding-bottom-10 {
+.pb10 {
   padding-bottom: 10px !important;
 }
 
@@ -170,6 +170,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 
+/* article */
 .article {
   padding: 20px 15px;
   min-height: 300px;
@@ -181,6 +182,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   border-left: 5px solid #eee;
 }
 
+/* ng-editor */
 .ng-editor {
   position: relative;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
@@ -228,7 +230,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 .ng-editor .toolbar .item {
   display: inline-block;
-  vertical-align: mildle;
+  vertical-align: middle;
   *vertical-align: auto;
   *zoom: 1;
   *display: inline;
