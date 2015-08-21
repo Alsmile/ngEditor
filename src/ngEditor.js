@@ -13,8 +13,8 @@
 'use strict';
   var module = angular.module('ngEditor', ['angularFileUpload']);
 
-  module.factory('NgEditor', [ '$rootScope', '$http', '$compile',
-    function($rootScope, $http, $compile) {
+  module.factory('NgEditor', [ '$rootScope', '$compile',
+    function($rootScope, $compile) {
       function NgEditor(options) {
         this.options = angular.copy(options);
       }
@@ -30,7 +30,7 @@
   ]);
 
 
-  module.directive('contenteditable', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+  module.directive('contenteditable', ['$rootScope', '$http', '$timeout', function($rootScope, $http, $timeout) {
     return {
       restrict: 'A',
       require: '?ngModel',
@@ -284,8 +284,17 @@
           });
         }
 
+				// Define templates variable.
+				var templates = [];
+
 				// Define toolbar buttons.
         var toolbarButtons = {
+					'template': {
+						class: 'fa fa-header',
+						tooltip:'模板',
+						dropdown: templates
+					},
+					'separator' :{},
           'title': {
             class: 'fa fa-header',
             tooltip:'标题和文本',
@@ -337,7 +346,7 @@
             tooltip:'删除线',
             command: 'strikethrough'
           },
-          'separator' :{},
+          'separator1' :{},
           'list-ol': {
             class: 'fa fa-list-ol',
             tooltip:'有序列表',
@@ -427,11 +436,14 @@
             command: 'html'
           }
         };
-        $scope.toolbarButtons = [];
+
+				var hasTemplate;
 				// Set custom toolbar buttons.
+				$scope.toolbarButtons = [];
         if ($scope.editor.options.toolbar) {
           angular.forEach($scope.editor.options.toolbar, function (val) {
-            $scope.toolbarButtons.push(toolbarButtons[val]);
+						if (val !== 'template') $scope.toolbarButtons.push(toolbarButtons[val]);
+						else if (!hasTemplate && $scope.editor.options.templateUrl) hasTemplate = true;
           });
         }
 				// Set default toolbar buttons.
@@ -439,8 +451,18 @@
           angular.forEach(toolbarButtons, function (val, key) {
             $scope.toolbarButtons.push(val);
           });
+
+					if ($scope.editor.options.templateUrl) hasTemplate = true;
+					// Remove template button and separator from toolbar.
+					else {
+						$scope.toolbarButtons.splice(0,2);
+					}
         }
 
+				// Download templates.
+				if (hasTemplate) {
+
+				}
 
         // Get editor element and toolbar element.
         var editorElem, toolbarElem;
