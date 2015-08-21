@@ -1,3 +1,6 @@
+html {
+  font-size: 62.5%;
+}
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
@@ -171,6 +174,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 
 /* article */
+
 .article {
   padding: 20px 15px;
   min-height: 300px;
@@ -182,7 +186,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   border-left: 5px solid #eee;
 }
 
-/* ng-editor */
 .ng-editor {
   position: relative;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
@@ -194,11 +197,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   color: #555;
   padding: 0 5px;
   background: #fff;
-  z-index: 100;
 }
-
 .ng-editor .toolbar .button {
-	font-size: 14px;
+  font-size: 1.4rem;
   line-height: 40px;
   background-color: transparent;
   border: none;
@@ -208,29 +209,22 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   padding: 0 15px;
   position: relative;
 }
-
-.ng-editor .toolbar .button .sub-menu {
-	line-height: 30px;
-}
-
 .ng-editor .toolbar button {
-	background-color: transparent;
-	border: none;
-	outline: none;
-	color: #555;
-	cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #555;
+  cursor: pointer;
 }
-
 .ng-editor .toolbar button.bk {
   background-color: #aaa;
 }
-
 .ng-editor .toolbar button:hover {
   color: #000;
 }
 .ng-editor .toolbar .item {
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: mildle;
   *vertical-align: auto;
   *zoom: 1;
   *display: inline;
@@ -262,14 +256,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   background: #fff;
   padding-top: 10px;
   padding-bottom: 10px;
-	z-index: 999;
 }
 .ng-editor .toolbar .item .abs.inline {
   width: 120px;
   line-height: 20px;
 }
 .ng-editor .toolbar .item .abs .sub-menu {
-  overflow: hidden;
+  white-space: nowrap;
+  line-height: 1.8;
 }
 .ng-editor .toolbar .item .abs .sub-menu a {
   display: block;
@@ -293,6 +287,45 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .ng-editor .toolbar .item .abs .sub-menu.inline a {
   padding: 5px;
   line-height: 16px;
+}
+.ng-editor .toolbar .item .abs .sub-menu.template {
+  width: 200px;
+}
+.ng-editor .toolbar .item .abs .sub-menu.template button {
+  width: 190px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.ng-editor .toolbar .item .abs .sub-menu.template .fa-caret-left {
+  position: absolute;
+  right: -2px;
+  color: #fff;
+  z-index: 1;
+}
+.ng-editor .toolbar .item .abs .sub-menu .template-preview {
+  position: absolute;
+  left: 200px;
+  top: 0;
+  width: 400px;
+  overflow: hidden;
+  max-height: 600px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  background-color: #fff;
+  padding: 7px;
+  font-size: 8px;
+}
+.ng-editor .toolbar .item .abs .sub-menu .template-preview h1, .ng-editor .toolbar .item .abs .sub-menu .template-preview h2, .ng-editor .toolbar .item .abs .sub-menu .template-preview h3, .ng-editor .toolbar .item .abs .sub-menu .template-preview h4, .ng-editor .toolbar .item .abs .sub-menu .template-preview h5, .ng-editor .toolbar .item .abs .sub-menu .template-preview h6 {
+  font-size: 8px;
+  font-weight: 800;
+}
+.ng-editor .toolbar .item .abs .sub-menu .template-preview > div {
+  overflow: hidden;
+}
+.ng-editor .toolbar .item .abs .sub-menu .template-preview br {
+  display: none;
 }
 .ng-editor .toolbar .item .abs .sub-menu input[type="file"] {
   position: absolute;

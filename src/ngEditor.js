@@ -13,17 +13,14 @@
 'use strict';
   var module = angular.module('ngEditor', ['angularFileUpload']);
 
-  module.factory('NgEditor', [ '$rootScope', '$http', '$compile',
-    function($rootScope, $http, $compile) {
+  module.factory('NgEditor', [ '$rootScope',
+    function($rootScope) {
       function NgEditor(options) {
         this.options = angular.copy(options);
       }
 
       NgEditor.prototype._onContentChanged = function(content) {};
       NgEditor.prototype.onContentChanged = function(content) {};
-
-      NgEditor.prototype._onCatalogChanged = function(catalog) {};
-      NgEditor.prototype.onCatalogChanged = function(catalog) {};
 
       return NgEditor;
     }
@@ -32,12 +29,13 @@
 
   module.directive('contenteditable', ['$rootScope', '$timeout', function($rootScope, $timeout) {
     return {
-      restrict: 'A',
-      require: '?ngModel',
+      restrict: 'A', // only activate on element attribute
+      require: '?ngModel', // get a hold of NgModelController,
       scope: {
-        editor:'='
+        editor: '=',
+        ngShow: '='
       },
-      link: function($scope, element, attrs, ctrl) {
+      link: function ($scope, element, attrs, ctrl) {
         if (!ctrl || !$scope.editor) return;
 
         var timer;
@@ -45,26 +43,29 @@
         // view -> model
         var isInputting;
         var getContent = function () {
-          isInputting = false;
-
           var html = element.html();
+          if (!html) return;
+
+          isInputting = false;
           ctrl.$setViewValue(html);
-          $scope.editor._onContentChanged(html);
 
           // 获取目录
           var catalogs = [];
+          var title, abstract;
           angular.forEach(element.children(), function (val) {
             if (val.nodeName === 'H1') {
+              title = angular.element(val).text();
               catalogs.push({
-                name: angular.element(val).text(),
+                name: title,
                 type: 1,
                 elem: val
               });
             }
 
             if (angular.element(val).hasClass("article-abstract")) {
+              abstract = angular.element(val).text();
               catalogs.push({
-                name: angular.element(val).text(),
+                name: abstract,
                 type: 2,
                 elem: val
               });
@@ -87,44 +88,47 @@
             }
           });
 
-          if (catalogs.length) {
-            $scope.editor._onCatalogChanged(catalogs);
-          }
+          $scope.editor._onContentChanged(html, catalogs, title, abstract);
         };
 
-        element.bind('input', function() {
-					if (isInputting) return ;
+        $scope.$watch('ngShow', function (newVal) {
+          if (isInputting || !newVal) return;
+          getContent();
+        });
+
+        element.bind('input', function () {
+          if (isInputting) return;
 
           if (timer) $timeout.cancel(timer);
-          timer = $timeout(function() {
+          timer = $timeout(function () {
             getContent();
           }, 1000);
         });
 
-        element.bind('blur', function() {
-					// Ended for inputting and get content right now while it was inputting.
-					// Do nothing when it was not inputting. Because has get.
-          if (!isInputting) return ;
+        element.bind('blur', function () {
+          // Ended for inputting and get content right now while it was inputting.
+          // Do nothing when it was not inputting. Because has get.
+          if (!isInputting) return;
 
           if (timer) $timeout.cancel(timer);
           getContent();
         });
 
         // model -> view
-        ctrl.$render = function() {
+        ctrl.$render = function () {
           element.html(ctrl.$viewValue);
         };
 
         ctrl.$render();
 
-        $scope.$on('$destroy', function(){
+        $scope.$on('$destroy', function () {
           if (timer) $timeout.cancel(timer);
         });
       }
     };
   }]);
 
-  module.directive('ngEditor', ['$rootScope', '$window', '$document', 'NgEditor', 'FileUploader', function($rootScope, $window, $document, NgEditor, FileUploader) {
+  module.directive('ngEditor', ['$rootScope', '$window', '$document', '$http', 'NgEditor', 'FileUploader', function($rootScope, $window, $document, $http, NgEditor, FileUploader) {
     return {
       restrict: 'E',
       template: '<div class="ng-editor">' +
@@ -177,14 +181,16 @@
           '黑体':'SimHei',
           '隶书':'SimLi',
           'andale mono': 'andale mono',
-          'arial, helvetica, sans-serif': 'arial',
+          'arial': 'arial',
           'arial black':'arial black,avant garde',
           'comic sans ms': 'comic sans ms',
+          'helvetica': 'helvetica',
           'impact':'impact,chicago' ,
+          'sans-serif': 'sans-serif',
           'times new roman':'times new roman'
         };
         $scope.fonts = [];
-				// Set custom fonts.
+        // Set custom fonts.
         if ($scope.editor.options.fonts) {
           angular.forEach($scope.editor.options.fonts, function (val) {
             $scope.fonts.push({
@@ -194,7 +200,7 @@
             });
           });
         }
-				// Set default fonts.
+        // Set default fonts.
         else {
           angular.forEach(fonts, function (val, key) {
             $scope.fonts.push({
@@ -216,7 +222,7 @@
           '48px':7
         };
         $scope.fontSizes = [];
-				// Set custom font-sizes.
+        // Set custom font-sizes.
         if ($scope.editor.options.fontSizes) {
           angular.forEach($scope.editor.options.fontSizes, function (val) {
             $scope.fontSizes.push({
@@ -226,7 +232,7 @@
             });
           });
         }
-				// Set default font-sizes.
+        // Set default font-sizes.
         else {
           angular.forEach(fontSizes, function (val, key) {
             $scope.fontSizes.push({
@@ -237,11 +243,11 @@
           });
         }
 
-				// Default colors.
+        // Default colors.
         var fontColors = ['#c00','#f00','#ffc000','#ff0','#92d050','#00b050','#00b0f0','#0070c0','#002060','#7030a0'];
-				// Define font-colors.
+        // Define font-colors.
         $scope.fontColors = [];
-				// Set custom font-colors.
+        // Set custom font-colors.
         if ($scope.editor.options.fontColors) {
           angular.forEach($scope.editor.options.fontColors, function (val) {
             $scope.fontColors.push({
@@ -251,7 +257,7 @@
             });
           });
         }
-				// Set default font-colors.
+        // Set default font-colors.
         else {
           angular.forEach(fontColors, function (val) {
             $scope.fontColors.push({
@@ -262,7 +268,7 @@
           });
         }
 
-				// Set custom back-colors.
+        // Set custom back-colors.
         $scope.backColors = [];
         if ($scope.editor.options.backColors) {
           angular.forEach($scope.editor.options.backColors, function (val) {
@@ -273,7 +279,7 @@
             });
           });
         }
-				// Set default back-colors.
+        // Set default back-colors.
         else {
           angular.forEach(fontColors, function (val) {
             $scope.backColors.push({
@@ -284,8 +290,14 @@
           });
         }
 
-				// Define toolbar buttons.
+        // Define toolbar buttons.
         var toolbarButtons = {
+          'template': {
+            class: 'fa fa-newspaper-o',
+            tooltip:'模板',
+            templates: []
+          },
+          'separator' :{},
           'title': {
             class: 'fa fa-header',
             tooltip:'标题和文本',
@@ -337,7 +349,7 @@
             tooltip:'删除线',
             command: 'strikethrough'
           },
-          'separator' :{},
+          'separator1' :{},
           'list-ol': {
             class: 'fa fa-list-ol',
             tooltip:'有序列表',
@@ -427,20 +439,38 @@
             command: 'html'
           }
         };
+
+        var hasTemplate;
+        // Set custom toolbar buttons.
         $scope.toolbarButtons = [];
-				// Set custom toolbar buttons.
         if ($scope.editor.options.toolbar) {
           angular.forEach($scope.editor.options.toolbar, function (val) {
-            $scope.toolbarButtons.push(toolbarButtons[val]);
+            if (val !== 'template') $scope.toolbarButtons.push(toolbarButtons[val]);
+            else if (!hasTemplate && $scope.editor.options.templateUrl) hasTemplate = true;
           });
         }
-				// Set default toolbar buttons.
+        // Set default toolbar buttons.
         else {
           angular.forEach(toolbarButtons, function (val, key) {
             $scope.toolbarButtons.push(val);
           });
+
+          if ($scope.editor.options.templateUrl) hasTemplate = true;
+          // Remove template button and separator from toolbar.
+          else {
+            $scope.toolbarButtons.splice(0,2);
+          }
         }
 
+        // Download templates.
+        if (hasTemplate) {
+          $http.get($scope.editor.options.templateUrl).success(function (data) {
+            if (data) {
+              toolbarButtons.template.templates = toolbarButtons.template.templates.concat(data);
+              console.info($scope.toolbarButtons)
+            }
+          });
+        }
 
         // Get editor element and toolbar element.
         var editorElem, toolbarElem;
@@ -457,10 +487,9 @@
           throw new TypeError('There is not a contenteditable.');
         }
 
-				// Set toolbar fixed or not.
+        // Set toolbar fixed or not.
         var offset;
         var toolbarStyle;
-        angular.element($window).bind('scroll', fixedScroll);
         var fixedScroll = function (ev) {
           if (!offset) offset =  toolbarElem.getBoundingClientRect().top;
           if (this.pageYOffset > offset + $scope.editor.options.top) {
@@ -478,17 +507,18 @@
           }
           $scope.$apply();
         };
+        angular.element($window).bind('scroll', fixedScroll);
 
         $scope.getToolbarStyle = function () {
           return toolbarStyle;
         };
 
-				document.execCommand('enableobjectresizing', true);
-				document.execCommand('styleWithCSS', true);
+        document.execCommand('enableobjectresizing', true);
+        document.execCommand('styleWithCSS', true);
 
         $scope.editable = true;
         $scope.command = function (cmd, b, val, event) {
-					if (event) event.stopPropagation();
+          if (event) event.stopPropagation();
           switch (cmd) {
             case 'createLink':
               val = prompt('请输入链接URL');
@@ -532,19 +562,21 @@
         };
 
         // Events of editor.
-        $scope.editor._onContentChanged = function (content) {
+        $scope.editor._onContentChanged = function (html, catalogs, title, abstract) {
+          $scope.ngModel.catalogs = catalogs;
+          $scope.ngModel.title = title;
+          $scope.ngModel.abstract = abstract;
+
           // do sth...
 
-          $scope.editor.onContentChanged(content);
+          $scope.editor.onContentChanged(html);
         };
 
-        $scope.editor._onCatalogChanged = function (content) {
-          // do sth...
-
-          $scope.editor.onCatalogChanged(content);
+        $scope.setArticle = function (article) {
+          $scope.ngModel = article;
         };
 
-				// Clear.
+        // Clear.
         $scope.$on('$destroy', function(){
           angular.element($window).unbind('scroll', fixedScroll);
         });
