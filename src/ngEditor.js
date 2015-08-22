@@ -13,8 +13,8 @@
 'use strict';
   var module = angular.module('ngEditor', ['angularFileUpload']);
 
-  module.factory('NgEditor', [ '$rootScope',
-    function($rootScope) {
+  module.factory('NgEditor', [ '$rootScope', '$compile',
+    function($rootScope, $compile) {
       function NgEditor(options) {
         this.options = angular.copy(options);
       }
@@ -27,7 +27,7 @@
   ]);
 
 
-  module.directive('contenteditable', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+  module.directive('contenteditable', ['$rootScope', '$http', '$timeout', function($rootScope, $http, $timeout) {
     return {
       restrict: 'A', // only activate on element attribute
       require: '?ngModel', // get a hold of NgModelController,
