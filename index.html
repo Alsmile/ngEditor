@@ -31,10 +31,11 @@
     <a id="required-dependancies" class="anchor" href="#required-dependancies" aria-hidden="true"><span
       class="octicon octicon-link"></span></a>Required dependancies</h1>
 
-  <ul>
-    <li>AngularJS</li>
-    <li>Font Awesome</li>
-  </ul>
+	<ul>
+		<li><a href="https://github.com/angular/angular.js">AngularJS</a></li>
+		<li><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a></li>
+		<li><a href="https://github.com/nervgh/angular-file-upload">angular-file-upload</a></li>
+	</ul>
 
   <h1>
     <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span
@@ -48,42 +49,58 @@
     <li>angular.module('app', ['ngEditor'])</li>
   </ul>
 
+	<p>Angular-file-upload is required if you need upload files.</p>
+
   <h1>
     <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage
   </h1>
 
   <div class="highlight highlight-html">
     <pre>&lt;<span class="pl-ent">ng</span><span class="pl-e">-editor</span> <span class="pl-e">ng-model</span>=<span
-      class="pl-s"><span class="pl-pds">"</span>doc.content<span class="pl-pds">"</span></span> <span class="pl-e">editor</span>=<span
+      class="pl-s"><span class="pl-pds">"</span>doc<span class="pl-pds">"</span></span> <span class="pl-e">editor</span>=<span
       class="pl-s"><span class="pl-pds">"</span>editor<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">ng</span><span
       class="pl-e">-editor</span>&gt;</pre>
   </div>
 
   <p>More to see the "demo".</p>
 
-  <h1>
-    <a id="opitons" class="anchor" href="#opitons" aria-hidden="true"><span class="octicon octicon-link"></span></a>Opitons
-  </h1>
+	<h1>ngModel - Object</h1>
 
-  <h2>
-    <a id="ngeditor" class="anchor" href="#ngeditor" aria-hidden="true"><span class="octicon octicon-link"></span></a>NgEditor
-  </h2>
+	<p>The ngModel is a object. It contains:</p>
 
-  <p>top : default 0. 工具栏变为fixed的高度。</p>
+	<p>title: The title of article. 当文章内容发生变化时，自动获取&lt;H1>内容作为title。建议一个文章有且仅有一个&lt;H1>。</p>
 
-  <p>uploadUrl: 上传图片请求的url。</p>
+	<p>content: The content of article. 整个文章内容的HTML代码。</p>
 
-  <p>uploadHeaders： 上传图片请求头。比如用于身份认证。</p>
+	<p>abstract: The abstract about article. 当文章内容发生变化时，自动获取class为article-abstract内容作为title。建议一个文章有且仅有一个article-abstract。</p>
 
-  <p>fonts： 可选的字体。</p>
+	<p>catalogs: The abstract of article. Includes the abstract. 当文章内容发生变化时，自动获取&lt;H1>、class为article-abstract、&lt;H2>、&lt;H3>、&lt;H4>、&lt;H5>、&lt;H6>、&lt;H7>作为catalogs。</p>
 
-  <p>fontSizes： 可选的字体大小。只支持以下值： '10px','12px','16px','18px','24px','32px’,'48px'。</p>
+	<ul>
+		<li>Tips: 当停止输入1s或失去焦点时触发计算上述内容，然后通知文章内容改变事件。在单击自定义保存按钮前，请确保计算完毕。（后期计划添加一个人工计算事件，并回调，确保内容正确。如果您有更好的解决方案请告诉我。非常感谢您的贡献。）</li>
+	</ul>
 
-  <p>fontColors： 可用的字体颜色值。</p>
+	<h1>Opitons</h1>
 
-  <p>backColors： 可用的背景颜色值。</p>
+	<h2>NgEditor</h2>
 
-  <p>toolbar： 自定义工具栏按钮。只支持以下值：title，bold，italic，underline...。（具体查看源码中：toolbarButtons的可用值）</p>
+	<p>top : default 0. 工具栏变为fixed的高度.</p>
+
+	<p>uploadUrl: 上传图片请求的url。</p>
+
+	<p>templateUrl: 上传或下载模板所请求的url。 GET: 从服务器获取模板。 POST: 保存模板到服务器。</p>
+
+	<p>uploadHeaders: 上传图片请求头。比如用于身份认证。</p>
+
+	<p>fonts: toolbar字体菜单可用的字体。</p>
+
+	<p>fontSizes: toolbar字体大小菜单可用的字体大小。目前仅支持: '10px','12px','16px','18px','24px','32px','48px'.</p>
+
+	<p>fontColors: toolbar字体颜色菜单可用的字体颜色。</p>
+
+	<p>backColors: toolbar背景颜色菜单可用的背景颜色。</p>
+
+	<p>toolbar: 自定义工具栏按钮。只支持以下值：title, bold, italic, underline...。（具体查看源码中：toolbarButtons的可用值）.</p>
 
   <h2>
     <a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example
