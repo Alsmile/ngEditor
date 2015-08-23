@@ -3,7 +3,8 @@
 Angular ngEditor is a module for the AngularJS framework. 
 
 Get started at [ngEditor](http://alsmile.github.io/ngEditor)!
-[Demo](http://alsmile.github.io/ngEditor/demo/)!
+
+[Demo](http://alsmile.github.io/ngEditor/demo/)
 
 #Required dependancies
 
@@ -31,13 +32,13 @@ More to see the "demo".
 
 The ngModel is a object. It contains:
 
-title: The title of article. 当文章内容发生变化时，自动获取<H1>内容作为title。建议一个文章有且仅有一个<H1>。
+title: The title of article. 当文章内容发生变化时，自动获取&lt;H1>内容作为title。建议一个文章有且仅有一个&lt;H1>。
 
 content: The content of article. 整个文章内容的HTML代码。
 
 abstract: The abstract about article. 当文章内容发生变化时，自动获取class为article-abstract内容作为title。建议一个文章有且仅有一个article-abstract。
 
-catalogs: The abstract of article. Includes the abstract. 当文章内容发生变化时，自动获取<H1>、class为article-abstract、<H2>、<H3>、<H4>、<H5>、<H6>、<H7>作为catalogs。
+catalogs: The abstract of article. Includes the abstract. 当文章内容发生变化时，自动获取&lt;H1>、class为article-abstract、&lt;H2>、&lt;H3>、&lt;H4>、&lt;H5>、&lt;H6>、&lt;H7>作为catalogs。
 
  * Tips: 当停止输入1s或失去焦点时触发计算上述内容，然后通知文章内容改变事件。在单击自定义保存按钮前，请确保计算完毕。（后期计划添加一个人工计算事件，并回调，确保内容正确。如果您有更好的解决方案请告诉我。非常感谢您的贡献。）
 
